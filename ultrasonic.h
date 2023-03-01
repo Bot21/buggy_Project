@@ -20,7 +20,7 @@ long ultrasound(int trig, int echo){
   delayMicroseconds(10);
   digitalWrite(trig, LOW);
 
-  duration = pulseIn(echoPinF, HIGH);
+  duration = pulseIn(echo, HIGH);
   return (duration*0.034)/2.0;
 }
 
