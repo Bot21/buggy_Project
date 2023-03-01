@@ -1,3 +1,5 @@
+//main file that runs when program is called.
+
 #include <Servo.h>
 #include "motors.h"
 #include "servo.h"
@@ -66,40 +68,39 @@ void loop() {
   Serial.println(" cm1");
 
 
-  if (cm1 >= 10){
-    i = 0;
-    go = 1;
-    forward();
+//  if (cm1 >= 5){
+//    i = 0;
+//    go = 1;
+//    forward();
 
-    if (cm2 - dist > 10 ){
-      anticlockwise();
+    if (cm2 > 10 ){
+      clockwise();
+      forward();
     }
-    else if(cm2 - dist < 10){
-      adjust_anticlock();
-    }
-    else if(cm2 - dist < 0);
-      adjust_clock();
-  }
-  else if (cm1 < 10){
-    go = 0;
-    ++i;
-    freeze();
-    //calculate distance after turning.
-      if (i == 1){
-        clockwise();
-        delay(1000);
-      }
-      else if (i == 2){
-        anticlockwise();
-        anticlockwise();
-        delay(1000);
-      }
-      else if (i == 3){
-        anticlockwise();
-        i = 0;
-        delay(1000);
-      }
-  }
+//  } 
+//  else if (cm1 < 5){
+//    go = 0;
+//    ++i;
+//    freeze();
+//    backward();
+//    //calculate distance after turning.
+//      if (i == 1){
+//        
+//        anticlockwise();
+//        delay(100);
+//      }
+//      else if (i == 2){
+//        
+//        clockwise();
+//        clockwise();
+//        delay(100);
+//      }
+//      else if (i == 3){
+//        anticlockwise();
+//        i = 0;
+//        delay(100);
+//      }
+//  }
 
 //  if (go == 0){
 //    compare(trigPinSF, echoPinSF, trigPinSB, echoPinSB);
