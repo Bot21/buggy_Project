@@ -64,43 +64,46 @@ void loop() {
 
 // cm1 = sonar.ping_cm();
 
-  Serial.print(cm1);
-  Serial.println(" cm1");
+  Serial.print(cm2);
+  Serial.println(" cm2");
 
 
-//  if (cm1 >= 5){
-//    i = 0;
-//    go = 1;
-//    forward();
+  if (cm1 >= 10){
+    i = 0;
+    go = 1;
+    forward();
 
-    if (cm2 > 10 ){
+    if (cm2 > 20){
+      delay(300);
       clockwise();
-      forward();
     }
-//  } 
-//  else if (cm1 < 5){
-//    go = 0;
-//    ++i;
-//    freeze();
-//    backward();
-//    //calculate distance after turning.
-//      if (i == 1){
-//        
-//        anticlockwise();
-//        delay(100);
-//      }
-//      else if (i == 2){
-//        
-//        clockwise();
-//        clockwise();
-//        delay(100);
-//      }
-//      else if (i == 3){
-//        anticlockwise();
-//        i = 0;
-//        delay(100);
-//      }
-//  }
+    else if (cm2 - dist > 0){
+      adjust_clock();
+    }
+    else if (cm2 - dist < 0){
+      adjust_anticlock();
+    }
+  } 
+  else if (cm1 < 10){
+    go = 0;
+    ++i;
+    freeze(); //Stop and move backwards for some space.
+    backward();
+      if (i == 1){
+        anticlockwise();
+        delay(100);
+      }
+      else if (i == 2){
+        clockwise();
+        clockwise();
+        delay(100);
+      }
+      else if (i == 3){
+        anticlockwise();
+        i = 0;
+        delay(100);
+      }
+  }
 
 //  if (go == 0){
 //    compare(trigPinSF, echoPinSF, trigPinSB, echoPinSB);
