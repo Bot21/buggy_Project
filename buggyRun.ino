@@ -8,6 +8,7 @@
 
 int go = 1; //bool to track status of buggy motion
 int i = 0;
+int j = 0;
 int cm1 = 0; //cm1 for distance of Front sensor, cm2 for distance of Side sensor
 int cm2 = 0;
 int dist = 0; //variable to keep the previous measurement of cm2 for distance calculation
@@ -73,14 +74,18 @@ void loop() {
     go = 1;
     forward();
 
-    if (cm2 > 20){
+    if (cm2 > 20 && j == 0){
+      j = 1;
       delay(300);
       clockwise();
     }
-    else if (cm2 - dist > 0){
+    else if (cm2 < 15){
+      j = 0;
+    }
+    else if (cm2 - dist > 0 && j == 0){
       adjust_clock();
     }
-    else if (cm2 - dist < 0){
+    else if (cm2 - dist < 0 && j == 0){
       adjust_anticlock();
     }
   } 
@@ -94,11 +99,6 @@ void loop() {
         delay(100);
       }
       else if (i == 2){
-        clockwise();
-        clockwise();
-        delay(100);
-      }
-      else if (i == 3){
         anticlockwise();
         i = 0;
         delay(100);
