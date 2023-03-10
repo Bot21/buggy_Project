@@ -60,7 +60,6 @@ void loop() {
 //  i++;
 
   cm1 = ultrasound(trigPinF, echoPinF);
-  dist = cm2;
   cm2 = ultrasound(trigPinS, echoPinS);
 
 // cm1 = sonar.ping_cm();
@@ -73,23 +72,26 @@ void loop() {
     i = 0;
     go = 1;
     forward();
+    delay(50);
+    dist = ultrasound(trigPinS, echoPinS);
 
-    if (cm2 > 20 && j == 0){ //if there is a path to the left, and buggy is allowed to turn i.e. j == 0
-      j = 1; //This is to ensure buggy does not turn repeatedly.
-      delay(300);//delay to ensure buggy clears the wall to its side before turning.
+    if (cm2 > 30 && j == 0){ //if there is a path to the left, and buggy is allowed to turn i.e. j == 0
+      j = 1; //This is to ensure buggy does not turn repeatedly.       
+      delay(500);//delay to ensure buggy clears the wall to its side before turning.
       clockwise();
     }
-    else if (cm2 < 15){
+    if (((cm2 - dist) > 0 || cm2 < 5 ) && j == 0){
+      adjust_anticlock(); //if buggy is moving away from wall and is allowed to turn, make a clocwise adjustment
+    }
+    else if ((cm2 - dist) < 0 && j == 0){
+      adjust_clock(); //if buggy is toward from wall and is allowed to turn, make a anticlocwise adjustment
+    }
+     else if (cm2 < 20){
       j = 0;//Enables buggy to turn only if it sensed a wall previously. 
-    }
-    else if (cm2 - dist > 0 && j == 0){
-      adjust_clock(); //if buggy is moving away from wall and is allowed to turn, make a clocwise adjustment
-    }
-    else if (cm2 - dist < 0 && j == 0){
-      adjust_anticlock(); //if buggy is toward from wall and is allowed to turn, make a anticlocwise adjustment
     }
   } 
   else if (cm1 < 10){
+    j = 0;
     go = 0;
     ++i;
     freeze(); //Stop and move backwards for some space.
